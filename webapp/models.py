@@ -1,6 +1,7 @@
 import json
 import re
 import urllib.parse
+import uuid
 
 from sqlalchemy import Column, Integer, SmallInteger, String, Text, DateTime, Boolean
 from sqlalchemy import TypeDecorator, ForeignKey, inspect
@@ -8,7 +9,7 @@ from sqlalchemy.orm import relationship, backref
 
 from webapp.config import CONF
 from webapp.extensions import db
-from webapp.utils import utcnow, now, json_dumps, random_string, camelcase_to_underscore
+from webapp.utils import utcnow, now, json_dumps, random_string, camelcase_to_underscore, utcISOnow
 from webapp.utils.encrypt import aes
 from webapp.utils import ok_jsonify, fail_jsonify
 
@@ -53,21 +54,29 @@ class ModelMixin(object):
             return None
         return txt
 
+    def to_dict(self):
+        res = {}
+        for k in self._dict_fields:
+            res[k] = getattr(self, k)
+        return res
+
 
 class TimestampMixin(object):
     created_at = Column(DateTime, default=now, nullable=False)
     updated_at = Column(DateTime, default=now, onupdate=now, nullable=False)
 
 
-class MyModel(db.Model, ModelMixin, TimestampMixin):
-    __tablename__ = 'my_model'
+class Account(db.Model, ModelMixin):
+    __tablename__ = 'accounts'
+    _dict_fields = ('id', 'first_name', 'last_name', 'username', 'account_created', 'account_updated')
 
-    id = Column(Integer, primary_key=True)
-
-    def to_dict(self):
-        return {
-            'id': self.id
-        }
+    id = Column(String(64), primary_key=True, default=str(uuid.uuid4()))
+    first_name = Column(String(64))
+    last_name = Column(String(64))
+    password = Column(String(256))
+    username = Column(String(256))  # email
+    account_created = Column(String(256), default=utcISOnow, nullable=False)
+    account_updated = Column(String(256), default=utcISOnow, onupdate=utcISOnow, nullable=False)
 
     def __repr__(self):
         return '<MyModel(id={})>'.format(self.id)

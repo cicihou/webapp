@@ -1,11 +1,15 @@
+import base64
 import datetime
 import decimal
 import json
 import re
 
+import bcrypt
 import shortuuid
-from flask import jsonify
+from flask import jsonify, make_response
 from sqlalchemy.orm.query import Query
+
+from webapp.config import CONF
 
 
 def utcnow():
@@ -14,6 +18,11 @@ def utcnow():
 
 def now():
     return datetime.datetime.now()
+
+
+def utcISOnow():
+    ''' example: 2016-08-29T09:12:33.001Z '''
+    return datetime.datetime.utcnow().isoformat()[:-3] + 'Z'
 
 
 class JSONEncoder(json.JSONEncoder):
@@ -43,8 +52,18 @@ def pretty_print(v):
     print(json_dumps(v, indent=2, ensure_ascii=False))
 
 
-def pure_jsonify():
-    return jsonify()
+def generate_auth(txt):
+    return "Basic " + base64.b64encode(txt.encode('ascii')).decode('ascii')
+
+
+def pure_jsonify(data={}):
+    return jsonify(data)
+
+
+def auth_jsonify(txt, data={}):
+    rsp = make_response(jsonify(data), 201)
+    rsp.headers["Authorization"] = generate_auth(txt)
+    return rsp
 
 
 def ok_jsonify(data=None):
@@ -102,3 +121,8 @@ def camelcase_to_underscore(s):
 
 def random_string(length=10):
     return shortuuid.random(length)
+
+
+def hash_pw(pw, salt=CONF.BCRYPT_SALT):
+    hashed = bcrypt.hashpw(pw, salt)
+    return hashed
