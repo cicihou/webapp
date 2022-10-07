@@ -11,10 +11,12 @@ class Config(object):
     LOG_LEVEL = logging.INFO
 
     # Flask-SQLAlchemy settings
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://user:password@host/db?charset=utf8'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:mysql1234@localhost/webapp?charset=utf8mb4'
     SQLALCHEMY_POOL_RECYCLE = 3600
     SQLALCHEMY_POOL_SIZE = 5
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    BCRYPT_SALT = b'$2b$12$Hw4dlmptnnOJ4RdCyimiVO'
 
 
 class DevelopmentConfig(Config):
