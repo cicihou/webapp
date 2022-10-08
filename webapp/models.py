@@ -11,7 +11,6 @@ from webapp.config import CONF
 from webapp.extensions import db
 from webapp.utils import utcnow, now, json_dumps, random_string, camelcase_to_underscore, utcISOnow
 from webapp.utils.encrypt import aes
-from webapp.utils import ok_jsonify, fail_jsonify
 
 
 class EncryptedType(TypeDecorator):
