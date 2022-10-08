@@ -3,7 +3,6 @@ import functools
 from flask import request, g, abort
 from marshmallow import INCLUDE, EXCLUDE, Schema, fields, validates_schema, post_load
 
-from webapp.models import Account
 from webapp.utils import hash_pw
 
 
@@ -15,7 +14,7 @@ class AccountMxin:
 
 class AccountCreateSchema(Schema, AccountMxin):
     _allow_params = ('username', 'first_name', 'last_name', 'password')
-    username = fields.String(required=True, allow_none=False)
+    username = fields.Email(required=True, allow_none=False)
 
     @post_load
     def process(self, item, **kwargs):
@@ -26,8 +25,10 @@ class AccountCreateSchema(Schema, AccountMxin):
     @validates_schema
     def validate_email_address(self, data, *args, **kwargs):
         email = data.get('username')
+        from webapp.models import Account
         account = Account.query.filter_by(username=email).first()
         if account:
+            print('dup email')
             abort(400)
 
 
