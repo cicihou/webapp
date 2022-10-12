@@ -20,3 +20,4 @@ python 3.6.x
       2. Checkout the branch.
       3. (After activate your virtualenv, ) pip install -r requirements.txt
       4. Run "python manage.py runserver -p 22928"
+
