@@ -69,7 +69,7 @@ class Account(db.Model, ModelMixin):
     __tablename__ = 'accounts'
     _dict_fields = ('id', 'first_name', 'last_name', 'username', 'account_created', 'account_updated')
 
-    id = Column(String(64), primary_key=True, default=str(uuid.uuid4()))
+    id = Column(String(64), primary_key=True, default=uuid.uuid4)
     first_name = Column(String(64))
     last_name = Column(String(64))
     password = Column(String(256))

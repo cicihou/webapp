@@ -3,7 +3,7 @@ import functools
 from flask import request, g, abort
 from marshmallow import INCLUDE, EXCLUDE, Schema, fields, validates_schema, post_load
 
-from webapp.utils import hash_pw
+from webapp.utils import hash_pw, status_jsonify
 
 
 class AccountMxin:
@@ -19,7 +19,6 @@ class AccountCreateSchema(Schema, AccountMxin):
     @post_load
     def process(self, item, **kwargs):
         item = {k : item[k] for k in item if k in self._allow_params}
-        item['password'] = hash_pw(item['password'].encode())
         return item
 
     @validates_schema
@@ -44,6 +43,7 @@ class AccountUpdateSchema(Schema, AccountMxin):
     def validate_fields(self, data, *args, **kwargs):
         for key in data:
             if key not in self._allow_params:
+                # {'msg': 'only first_name, last_name, password are allowed'}
                 abort(400)
 
 
@@ -58,7 +58,6 @@ def validate_schema(schema):
             try:
                 data = schema(unknown=INCLUDE).load(params)
             except Exception as e:
-                print(e)
                 abort(400)
             g.json_params = data
             return view_func(*args, **kwargs)

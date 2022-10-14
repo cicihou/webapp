@@ -60,9 +60,10 @@ def pure_jsonify(data={}):
     return jsonify(data)
 
 
-def auth_jsonify(txt, data={}):
-    rsp = make_response(jsonify(data), 201)
-    rsp.headers["Authorization"] = generate_auth(txt)
+def status_jsonify(status_code, data={}, auth=''):
+    rsp = make_response(jsonify(data), status_code)
+    if auth:
+        rsp.headers["Authorization"] = generate_auth(auth)
     return rsp
 
 
