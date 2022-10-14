@@ -4,6 +4,7 @@ import functools
 from flask import abort, request
 
 from webapp.models import Account
+from webapp.utils import hash_pw
 
 
 def login_required(view_func):
@@ -41,6 +42,7 @@ def check_user_auth(id):
     except:
         abort(401)
     username, pw = token.split(':')
-    acc = Account.query.filter_by(username=username, password=pw).first()
+    password = hash_pw(pw.encode())
+    acc = Account.query.filter_by(username=username, password=password).first()
     if not acc or acc.id != id:
         abort(403)
