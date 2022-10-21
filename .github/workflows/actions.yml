@@ -32,3 +32,8 @@ jobs:
       run: |
         # pytest
         echo no pytest right now
+    - name: upload webapp
+      uses: actions/upload-artifact@v3
+      with:
+        name: webapp
+        path: ${{ github.workspace }}/

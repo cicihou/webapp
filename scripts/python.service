@@ -1,0 +1,12 @@
+[Unit]
+Description=Webapp Service
+After=multi-user.target
+Conflicts=getty@tty1.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 ~/webapp/manage.py runserver -p 22928
+StandardInput=tty-force
+
+[Install]
+WantedBy=multi-user.target
