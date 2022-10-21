@@ -54,10 +54,10 @@ build {
   sources = ["source.amazon-ebs.my-ami"]
 
   provisioner "file" {
-    source = "../webapp/"
+    source = "./webapp/"
     destination = "/home/ubuntu/"
 }
   provisioner "shell" {
-    script = "script.sh"
+    script = "./scripts/script.sh"
   }
 }
