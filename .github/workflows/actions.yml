@@ -53,12 +53,6 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-      - name: test path
-        run: pwd
-      - name: test path1
-        run: ls -r
-      - name: test path2
-        run: ls ../
       # validate templates
       - name: Validate Template
         uses: hashicorp/packer-github-actions@master
@@ -76,5 +70,5 @@ jobs:
           working_directory: ./
         env:
           PACKER_LOG: 1
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
