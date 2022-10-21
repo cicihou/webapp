@@ -17,7 +17,7 @@ sudo mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha
 sudo mysql --user=root --password=mysql1234 -e "create database webapp charset = utf8mb4;"
 sudo service mysql restart
 echo "Install Python"
-sudo apt-get install -y python3.6
+#sudo apt-get install -y python3.6
 #sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
 #libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
 #libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev \
@@ -29,10 +29,6 @@ sudo apt-get install -y python3.6
 #make -j 8  # adjust for number of your CPU cores
 #sudo make altinstall
 #echo finish python install
-sudo apt-get install zip unzip -y
-cd ~
-unzip webapp.zip
-cd webapp
 pip install -r requirements.txt
 python manage.py db stamp head
 python manage.py db migrate
