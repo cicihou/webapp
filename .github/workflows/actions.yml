@@ -53,7 +53,7 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-      - name: test download path
+      - name: test path
         run: pwd
       # validate templates
       - name: Validate Template
@@ -61,14 +61,14 @@ jobs:
         with:
           command: validate
           arguments: -syntax-only
-          target: /scripts/ami.pkr.hcl
+          target: ../scripts/ami.pkr.hcl
       # build artifact
       - name: Build Artifact
         uses: hashicorp/packer-github-actions@master
         with:
           command: build
           arguments: "-color=false -on-error=abort"
-          target: /scripts/ami.pkr.hcl
+          target: ../scripts/ami.pkr.hcl
           working_directory: ./
         env:
           PACKER_LOG: 1
