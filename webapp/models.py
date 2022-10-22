@@ -10,17 +10,6 @@ from sqlalchemy.orm import relationship, backref
 from webapp.config import CONF
 from webapp.extensions import db
 from webapp.utils import utcnow, now, json_dumps, random_string, camelcase_to_underscore, utcISOnow
-from webapp.utils.encrypt import aes
-
-
-class EncryptedType(TypeDecorator):
-    impl = String
-
-    def process_bind_param(self, value, dialect):
-        return aes.encrypt(value)
-
-    def process_result_value(self, value, dialect):
-        return aes.decrypt(value)
 
 
 class JSONType(TypeDecorator):

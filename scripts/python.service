@@ -1,0 +1,12 @@
+[Unit]
+Description=Webapp Service
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/bin/python3 /home/ubuntu/manage.py runserver -p 22928
+StartLimitBurst=0
+
+[Install]
+WantedBy=multi-user.target
