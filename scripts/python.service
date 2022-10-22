@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 Restart=always
-ExecStart=/usr/bin/python3 /home/ubuntu/manage.py runserver -p 22928
+ExecStart=/usr/bin/python3 /home/ubuntu/manage.py runserver -h 0.0.0.0 -p 22928
 StartLimitBurst=0
 
 [Install]
