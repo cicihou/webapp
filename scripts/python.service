@@ -5,7 +5,7 @@ Conflicts=getty@tty1.service
 
 [Service]
 Type=simple
-ExecStart=/.pyenv/versions/webapp/bin/python3.6 ~/manage.py runserver -p 22928
+ExecStart=/usr/bin/python3.6 ~/manage.py runserver -p 22928
 StandardInput=tty-force
 
 [Install]
