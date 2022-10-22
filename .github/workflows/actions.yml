@@ -35,3 +35,10 @@ jobs:
       with:
         name: webapp
         path: ${{ github.workspace }}/
+      # validate templates
+    - name: Validate Template
+      uses: hashicorp/packer-github-actions@master
+      with:
+        command: validate
+        arguments: -syntax-only
+        target: ./scripts/ami.pkr.hcl
