@@ -9,9 +9,6 @@ sudo apt-get install nginx -y
 sudo apt-get clean
 sudo apt-get install dialog apt-utils -y
 echo "Install Mysql"
-#sudo apt-get install debconf-utils
-#sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password mysql1234'
-#sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password mysql1234'
 sudo apt-get -y install mysql-server
 sudo mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'mysql1234';"
 sudo mysql --user=root --password=mysql1234 -e "create database webapp charset = utf8mb4;"
