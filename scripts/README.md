@@ -18,3 +18,8 @@ build
 packer build ami.pkr.hcl
 PACKER_LOG=1 packer build ami.pkr.hcl
 ```
+
+build with variable
+```
+PACKER_LOG=1 packer build -var 'source_ami=demo_ami' -var 'subnet_id=default_vpc_id' ami.pkr.hcl
+```

@@ -1,15 +1,10 @@
 import json
-import re
-import urllib.parse
 import uuid
 
-from sqlalchemy import Column, Integer, SmallInteger, String, Text, DateTime, Boolean
-from sqlalchemy import TypeDecorator, ForeignKey, inspect
-from sqlalchemy.orm import relationship, backref
-
-from webapp.config import CONF
+from sqlalchemy import Column, String, Text, DateTime
+from sqlalchemy import TypeDecorator
 from webapp.extensions import db
-from webapp.utils import utcnow, now, json_dumps, random_string, camelcase_to_underscore, utcISOnow
+from webapp.utils import now, json_dumps, utcISOnow
 
 
 class JSONType(TypeDecorator):
@@ -27,6 +22,14 @@ class JSONType(TypeDecorator):
 class ModelMixin(object):
     def save(self):
         db.session.add(self)
+        db.session.commit()
+
+    def update(self):
+        db.session.merge(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
         db.session.commit()
 
     def update_dict(self, values, allowed_fields=None):
@@ -68,3 +71,14 @@ class Account(db.Model, ModelMixin):
 
     def __repr__(self):
         return '<MyModel(id={})>'.format(self.id)
+
+
+class Document(db.Model, ModelMixin):
+    __tablename__ = 'documents'
+    _dict_fields = ('doc_id', 'user_id', 'name', 'date_created', 's3_bucket_path')
+
+    doc_id = Column(String(64), primary_key=True, default=uuid.uuid4)
+    user_id =  Column(String(64))
+    name = Column(String(32))
+    date_created = Column(String(256), default=utcISOnow, nullable=False)
+    s3_bucket_path = Column(String(64))
