@@ -21,4 +21,13 @@ python 3.6.x
       3. (After activate your virtualenv, ) pip install -r requirements.txt
       4. Run "python manage.py runserver -p 22928"
 
+## Command
+Connect RDB from EC2 instance
+```
+mysql -h csye6225.cpy2lc6qfkor.us-east-1.rds.amazonaws.com -P 3306 -u csye6225 -p
 
+use csye6225;
+show tables;
+describe {tablename}
+DROP TABLE IF EXISTS `accounts`;DROP TABLE IF EXISTS `alembic_version`;DROP TABLE IF EXISTS `documents`;
+```

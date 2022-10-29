@@ -4,9 +4,9 @@ After=network.target
 
 [Service]
 Type=simple
-Restart=always
+Restart=on-failure
 ExecStart=/usr/bin/python3 /home/ubuntu/manage.py runserver -h 0.0.0.0 -p 22928
-StartLimitBurst=0
+EnvironmentFile=/home/ubuntu/env
 
 [Install]
 WantedBy=multi-user.target
