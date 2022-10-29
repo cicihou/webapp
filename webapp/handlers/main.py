@@ -103,23 +103,23 @@ def _create_resource():
     doc['user_id'] = user.id
     doc = Document(**doc)
     doc.save()
-    upload_file(file, CONF.S3_BUCKET, doc.doc_id)
+    upload_file(file, CONF.S3_BUCKET, doc.doc_id, doc.to_dict())
     return doc
 
 
 def get_resource():
     file = request.files.get('file', None)
-    # fileType = request.files.get('fileType', None)
+    fileType = request.files.get('fileType', None)
 
     if not file or file.filename == '':
         return abort(400)
-    # fileType = splitext(file.filename)[1].lower()[1:]
+    fileType = fileType or splitext(file.filename)[1].lower()[1:]
     filename = secure_filename(quote(file.filename))
     doc = dict(name=filename, s3_bucket_path=CONF.S3_BUCKET)
     return doc, file
 
 
-def upload_file(file_name, bucket, object_name=None):
+def upload_file(file_name, bucket, object_name=None, metadata={}):
     """Upload a file to an S3 bucket
 
     :param file_name: File to upload
@@ -135,7 +135,8 @@ def upload_file(file_name, bucket, object_name=None):
     # Upload the file
     s3_client = boto3.client('s3')
     try:
-        response = s3_client.upload_fileobj(file_name, bucket, object_name)
+        response = s3_client.upload_fileobj(file_name, bucket, object_name,
+                                            ExtraArgs={'Metadata': metadata})
         logging.info(response)
     except ClientError as e:
         logging.error(e)

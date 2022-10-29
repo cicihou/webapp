@@ -6,6 +6,7 @@ After=network.target
 Type=simple
 Restart=always
 ExecStart=WEBAPP_ENV=prod /usr/bin/python3 /home/ubuntu/manage.py runserver -h 0.0.0.0 -p 22928
+EnvironmentFile=/home/ubuntu/env
 
 [Install]
 WantedBy=multi-user.target
