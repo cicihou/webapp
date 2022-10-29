@@ -31,3 +31,14 @@ show tables;
 describe {tablename}
 DROP TABLE IF EXISTS `accounts`;DROP TABLE IF EXISTS `alembic_version`;DROP TABLE IF EXISTS `documents`;
 ```
+
+read python service log
+```
+sudo journalctl -u python.service -f
+```
+
+ec2 userdata script path
+```
+sudo cat /var/lib/cloud/instance/scripts/part-001
+sudo /var/lib/cloud/instance/scripts/part-001
+```
