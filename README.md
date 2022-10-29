@@ -29,4 +29,5 @@ mysql -h csye6225.cpy2lc6qfkor.us-east-1.rds.amazonaws.com -P 3306 -u csye6225 -
 use csye6225;
 show tables;
 describe {tablename}
+DROP TABLE IF EXISTS `accounts`;DROP TABLE IF EXISTS `alembic_version`;DROP TABLE IF EXISTS `documents`;
 ```
