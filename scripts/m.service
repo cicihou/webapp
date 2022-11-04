@@ -1,0 +1,13 @@
+[Unit]
+Description=Run once
+After=local-fs.target
+After=network.target
+
+[Service]
+ExecStart=/bin/bash /home/ubuntu/m.sh
+RemainAfterExit=true
+Type=oneshot
+EnvironmentFile=/home/ubuntu/env
+
+[Install]
+WantedBy=multi-user.target

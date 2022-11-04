@@ -19,3 +19,5 @@ echo "Install systemd"
 sudo apt-get -y install systemd
 sudo cp ~/scripts/python.service /lib/systemd/system/python.service
 sudo chmod 777 /lib/systemd/system/python.service
+sudo cp ~/scripts/m.service /lib/systemd/system/m.service
+sudo chmod 777 /lib/systemd/system/m.service

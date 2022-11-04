@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import functools
 import logging
 import os
 from os.path import splitext, join
@@ -103,6 +102,8 @@ def _create_resource():
     doc['user_id'] = user.id
     doc = Document(**doc)
     doc.save()
+    doc.s3_bucket_path += doc.doc_id
+    doc.update()
     upload_file(file, CONF.S3_BUCKET, doc.doc_id, doc.to_dict())
     return doc
 
@@ -115,7 +116,7 @@ def get_resource():
         return abort(400)
     fileType = fileType or splitext(file.filename)[1].lower()[1:]
     filename = secure_filename(quote(file.filename))
-    doc = dict(name=filename, s3_bucket_path=CONF.S3_BUCKET)
+    doc = dict(name=filename, s3_bucket_path=f'https://{CONF.S3_BUCKET}.s3.amazonaws.com/')
     return doc, file
 
 
