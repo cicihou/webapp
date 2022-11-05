@@ -24,7 +24,7 @@ python 3.6.x
 ## Command
 Connect RDB from EC2 instance
 ```
-mysql -h csye6225.cpy2lc6qfkor.us-east-1.rds.amazonaws.com -P 3306 -u csye6225 -p
+mysql -h csye6225.cpy2lc6qfkor.us-east-1.rds.amazonaws.com -u csye6225 -p
 
 use csye6225;
 show tables;
@@ -41,4 +41,9 @@ ec2 userdata script path
 ```
 sudo cat /var/lib/cloud/instance/scripts/part-001
 sudo /var/lib/cloud/instance/scripts/part-001
+```
+
+ec2 userdata re-run before cloud formation update stack
+```
+sudo rm -rf /var/lib/cloud/*
 ```
