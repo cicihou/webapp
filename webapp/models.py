@@ -81,4 +81,4 @@ class Document(db.Model, ModelMixin):
     user_id =  Column(String(64))
     name = Column(String(32))
     date_created = Column(String(256), default=utcISOnow, nullable=False)
-    s3_bucket_path = Column(String(64))
+    s3_bucket_path = Column(String(256))
