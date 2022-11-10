@@ -21,3 +21,12 @@ sudo cp ~/scripts/python.service /lib/systemd/system/python.service
 sudo chmod 777 /lib/systemd/system/python.service
 sudo cp ~/scripts/m.service /lib/systemd/system/m.service
 sudo chmod 777 /lib/systemd/system/m.service
+echo "cloud watch"
+sudo wget https://s3.us-east-1.amazonaws.com/amazoncloudwatch-agent-us-east-1/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb
+sudo dpkg -i -E ./amazon-cloudwatch-agent.deb
+sudo touch /var/log/csye6225.log
+sudo chmod 777 /var/log/csye6225.log
+sudo cp ~/scripts/cloudwatch-config.json /opt/cloudwatch-config.json
+sudo chmod 777 /opt/cloudwatch-config.json
+echo "config cloud watch agent"
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/opt/cloudwatch-config.json -s

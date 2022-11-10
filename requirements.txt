@@ -40,6 +40,7 @@ s3transfer==0.3.7
 shortuuid==1.0.1
 six==1.16.0
 SQLAlchemy==1.4.17
+statsd==4.0.1
 tomli==1.2.3
 typing-extensions==3.10.0.0
 urllib3==1.25.11

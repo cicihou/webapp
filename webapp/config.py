@@ -22,6 +22,12 @@ class Config(object):
     BCRYPT_SALT = b'$2b$12$Hw4dlmptnnOJ4RdCyimiVO'
     S3_BUCKET = os.environ.get('S3_BUCKET', '')
 
+    LOG_FILE_PATH = '/var/log/csye6225.log'
+
+    STATSD_HOST = 'localhost'
+    STATSD_PORT = '8125'
+    STATSD_PREFIX = 'webapp'
+
 
 class DevelopmentConfig(Config):
     DEBUG = True
@@ -29,7 +35,7 @@ class DevelopmentConfig(Config):
 
 
 class ProductionConfig(Config):
-    LOG_LEVEL = logging.WARNING
+    LOG_LEVEL = logging.INFO
     SQLALCHEMY_ECHO = False
     DB_USERNAME = 'csye6225'
     DB_PASSWORD = os.environ.get('DB_PASSWORD'.upper(), 'mysql1234')
