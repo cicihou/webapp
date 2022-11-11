@@ -25,7 +25,7 @@ class Config(object):
     LOG_FILE_PATH = '/var/log/csye6225.log'
 
     STATSD_HOST = 'localhost'
-    STATSD_PORT = '8125'
+    STATSD_PORT = 8125
     STATSD_PREFIX = 'webapp'
 
 
