@@ -90,7 +90,7 @@ def read_document(doc_id):
     user = Account.query.filter_by(username=g.username, password=g.password).first()
     if not user:
         abort(403)
-    doc = Document.query.filter_by(user_id=user.id, doc_id=doc_id).first()
+    doc = Document.query.filter_by(user_id=user.id, doc_id=doc_id).first_or_404()
     return pure_jsonify([doc.to_dict()])
 
 
