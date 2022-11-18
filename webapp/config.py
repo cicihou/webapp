@@ -28,6 +28,14 @@ class Config(object):
     STATSD_PORT = 8125
     STATSD_PREFIX = 'webapp'
 
+    SNS_TOPIC_ARN = os.environ.get('SNS_TOPIC_ARN', '')
+    APP_URL = 'http://demo.xihou.me:22928'
+
+    REGION = os.environ.get('DYNAMO_REGION', 'us-east-1')
+
+    DYNAMO_TABLE = os.environ.get('DYNAMO_TABLE', 'UserTokenTable')
+    DYNAMO_TTL = os.environ.get('DYNAMO_TTL', 300)
+
 
 class DevelopmentConfig(Config):
     DEBUG = True
@@ -42,6 +50,7 @@ class ProductionConfig(Config):
     DB_HOST = os.environ.get('DB_HOST'.upper(), 'localhost')
     DB = 'csye6225'
     SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:3306/{DB}?charset=utf8mb4'
+    DYNAMO_TTL = os.environ.get('DYNAMO_TTL', 120)
 
 
 def get_config_class():

@@ -47,10 +47,16 @@ class AccountUpdateSchema(Schema, AccountMxin):
                 abort(400)
 
 
+class AccountVerifySchema(Schema):
+    email = fields.String(required=True, allow_none=False)
+    token = fields.String(required=True, allow_none=False)
+
+
 def validate_schema(schema):
     def wrapper(view_func):
         @functools.wraps(view_func)
         def f(*args, **kwargs):
+            a = request
             if request.method in ['POST', 'PUT']:
                 params = request.get_json()
             else:

@@ -14,6 +14,8 @@ def login_required(view_func):
         token = validate_token()
         if not token:
             abort(401)
+        if not is_verified():
+            abort(401)
         return view_func(*args, **kwargs)
 
     return wrapper
@@ -41,6 +43,11 @@ def validate_token():
     g.username = username
     g.password = password
     return parts[1]
+
+
+def is_verified():
+    acc = Account.query.filter_by(username=g.username).first_or_404()
+    return acc.verified
 
 
 def check_user_auth(id):
