@@ -34,7 +34,7 @@ class Config(object):
     REGION = os.environ.get('DYNAMO_REGION', 'us-east-1')
 
     DYNAMO_TABLE = os.environ.get('DYNAMO_TABLE', 'UserTokenTable')
-    DYNAMO_TTL = os.environ.get('DYNAMO_TTL', 100)
+    DYNAMO_TTL = os.environ.get('DYNAMO_TTL', 300)
 
 
 class DevelopmentConfig(Config):
@@ -50,6 +50,7 @@ class ProductionConfig(Config):
     DB_HOST = os.environ.get('DB_HOST'.upper(), 'localhost')
     DB = 'csye6225'
     SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:3306/{DB}?charset=utf8mb4'
+    DYNAMO_TTL = os.environ.get('DYNAMO_TTL', 120)
 
 
 def get_config_class():
