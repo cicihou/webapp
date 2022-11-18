@@ -1,7 +1,7 @@
 import json
 import uuid
 
-from sqlalchemy import Column, String, Text, DateTime
+from sqlalchemy import Column, String, Text, DateTime, Boolean
 from sqlalchemy import TypeDecorator
 from webapp.extensions import db
 from webapp.utils import now, json_dumps, utcISOnow
@@ -59,7 +59,7 @@ class TimestampMixin(object):
 
 class Account(db.Model, ModelMixin):
     __tablename__ = 'accounts'
-    _dict_fields = ('id', 'first_name', 'last_name', 'username', 'account_created', 'account_updated')
+    _dict_fields = ('id', 'first_name', 'last_name', 'username', 'account_created', 'account_updated', 'verified')
 
     id = Column(String(64), primary_key=True, default=uuid.uuid4)
     first_name = Column(String(64))
@@ -68,6 +68,7 @@ class Account(db.Model, ModelMixin):
     username = Column(String(256))  # email
     account_created = Column(String(256), default=utcISOnow, nullable=False)
     account_updated = Column(String(256), default=utcISOnow, onupdate=utcISOnow, nullable=False)
+    verified = Column(Boolean, default=0)
 
     def __repr__(self):
         return '<MyModel(id={})>'.format(self.id)

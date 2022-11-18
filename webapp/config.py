@@ -28,6 +28,14 @@ class Config(object):
     STATSD_PORT = 8125
     STATSD_PREFIX = 'webapp'
 
+    SNS_TOPIC_ARN = os.environ.get('SNS_TOPIC_ARN', '')
+    APP_URL = 'http://demo.xihou.me:22928'
+
+    REGION = os.environ.get('DYNAMO_REGION', 'us-east-1')
+
+    DYNAMO_TABLE = os.environ.get('DYNAMO_TABLE', 'UserTokenTable')
+    DYNAMO_TTL = os.environ.get('DYNAMO_TTL', 100)
+
 
 class DevelopmentConfig(Config):
     DEBUG = True
