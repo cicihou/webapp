@@ -29,7 +29,7 @@ class Config(object):
     STATSD_PREFIX = 'webapp'
 
     SNS_TOPIC_ARN = os.environ.get('SNS_TOPIC_ARN', '')
-    APP_URL = 'http://demo.xihou.me:22928'
+    APP_URL = 'https://demo.xihou.me'
 
     REGION = os.environ.get('DYNAMO_REGION', 'us-east-1')
 

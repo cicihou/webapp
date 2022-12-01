@@ -10,7 +10,7 @@ packer fmt ami.pkr.hcl
 
 validate
 ```
-packer validate ami.pkr.hcl
+packer validate scripts/ami.pkr.hcl
 ```
 
 build

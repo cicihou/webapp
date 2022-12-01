@@ -1,5 +1,13 @@
 name: Python application
 
+env:
+  AWS_REGION: us-east-1
+  AMI_id: ami-xxxxx
+  LAUNCH_TEMPLATE_NAME: asg_launch_config
+  VERSION_DESC: WebVersion2
+  SOURCE_VERSION: 1
+  ASG_NAME: my-asg
+
 on:
   push:
     branches: [ "main" ]
@@ -49,5 +57,28 @@ jobs:
           working_directory: ./
         env:
           PACKER_LOG: 1
-          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_KEY: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
+      - name: Get AMI ID
+        run: |
+          AMI_ID = $(jq -r .builds[0].artifact_id |  cut -d':' -f2)
+          echo "AMI_ID=$AMI_ID" >> $GITHUB_ENV
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.DEMO_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.DEMO_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Create launch template
+        run: |
+          aws ec2 create-launch-template-version --launch-template-name ${{ env.LAUNCH_TEMPLATE_NAME }} \
+          --version-description ${{ env.VERSION_DESC }} \
+          --source-version ${{ env.SOURCE_VERSION }} \
+          --launch-template-data "ImageId=${{ env.AMI_ID}}"
+      - name: attach instance to latest template
+        run: |
+          aws autoscaling update-auto-scaling-group --auto-scaling-group-name ${{env.ASG_NAME}} \
+          --launch-template LaunchTemplateName=${{ env.LAUNCH_TEMPLATE_NAME }},Version='$Latest'
+      - name: refresh instance
+        run: |
+          aws autoscaling start-instance-refresh --auto-scaling-group-name ${{env.ASG_NAME}}
