@@ -61,7 +61,8 @@ jobs:
           AWS_SECRET_KEY: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
       - name: Get AMI ID
         run: |
-          echo "AMI_ID=$(jq -r .builds[0].artifact_id |  cut -d':' -f2)" >> $GITHUB_ENV
+          AMI_ID=$(jq -r '.builds[0].artifact_id' manifest.json |  cut -d':' -f2)
+          echo "AMI_ID=$AMI_ID" >> $GITHUB_ENV
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
