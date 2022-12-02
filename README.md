@@ -47,3 +47,8 @@ ec2 userdata re-run before cloud formation update stack
 ```
 sudo rm -rf /var/lib/cloud/*
 ```
+
+import ssl cert
+```
+aws acm import-certificate --certificate fileb://demo_xihou_me.crt --certificate-chain fileb://demo_xihou_me.ca-bundle --private-key fileb://private.key
+```
