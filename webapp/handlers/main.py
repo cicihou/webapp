@@ -32,7 +32,7 @@ def verify_account():
     kwarg = g.json_params
     acc = Account.query.filter_by(username=kwarg['email']).first_or_404()
     if acc.verified:
-        return ok_jsonify('already verified')
+        return ok_jsonify('account already verified')
     resp = DynamoClient().read(kwarg['email'], kwarg['token'])
     if resp:
         acc.verified = 1
