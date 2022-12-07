@@ -42,7 +42,7 @@ def verify_account():
     return ok_jsonify('account verified')
 
 
-@bp_main.route('/v1/account/<id>', methods=['GET'])
+@bp_main.route('/v2/account/<id>', methods=['GET'])
 @login_required
 def read_account(id):
     check_user_auth(id)
